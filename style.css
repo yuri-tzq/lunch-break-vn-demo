@@ -1,0 +1,345 @@
+:root { font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif; color: #f8f5fb; background: #131528; }
+* { box-sizing: border-box; }
+body { min-height: 100vh; margin: 0; display: grid; place-items: center; padding: 18px; background: radial-gradient(ellipse at 15% 5%, #3b2e57, transparent 50%), radial-gradient(ellipse at 90% 95%, #28395f, transparent 48%), #131528; }
+button { font: inherit; cursor: pointer; }
+button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.game { width: min(1040px, 100%); background: #1f223b; overflow: hidden; border: 1px solid #b7add238; border-radius: 22px; box-shadow: 0 30px 100px #05050f9c; }
+.toolbar { display: flex; align-items: center; gap: 24px; justify-content: space-between; padding: 18px 24px; background: #1d1b32; }
+.eyebrow { letter-spacing: .16em; color: #b7a9d7; font-size: .64rem; font-weight: 700; }
+h1 { margin: 3px 0; font-size: clamp(1.1rem, 3vw, 1.55rem); letter-spacing: -.04em; }
+.accent { color: #f39dca; }
+.stats { display: flex; flex-wrap: wrap; gap: 13px; }
+.stats > .stat { min-width: 100px; text-align: center; padding: 5px 10px; border-left: 1px solid #ffffff22; flex: 1 1 125px; }
+.stats .stat-label { display: block; font-size: .62rem; letter-spacing: .07em; color: #b2a9c4; }
+.stats .stat-value { display: block; font-size: 1.15rem; margin-top: 4px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.restart { color: #fff; background: #ffffff12; border: 1px solid #ffffff40; border-radius: 100px; padding: 9px 14px; }
+.restart:hover { background: #ffffff24; }
+.stage { height: clamp(300px, 48vh, 480px); position: relative; overflow: hidden; isolation: isolate; background: #8da1d2; }
+.background { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+.scenic-overlay { position: absolute; inset: 0; background: linear-gradient(0deg, #17142b65, transparent 45%), linear-gradient(90deg, #27203b31, transparent 70%); z-index: 1; pointer-events: none; }
+/* Two independent slots. When exactly one is visible it moves to the center. */
+.sprite { position: absolute; z-index: 2; bottom: -10%; left: 50%; height: 115%; width: auto; max-width: 55%; object-fit: contain; object-position: center bottom; transform: translateX(-50%); filter: drop-shadow(0 16px 24px #281d3966); pointer-events: none; opacity: 0; visibility: hidden; transition: opacity .2s ease, left .25s ease, visibility .2s ease, filter .25s ease; }
+.sprite.is-visible { opacity: 1; visibility: visible; }
+/* Characters who are not speaking dim, without losing the existing shadow. */
+.sprite.is-dimmed { filter: brightness(0.45) drop-shadow(0 16px 24px #281d3966); }
+.sprite--left { left: 27%; }
+.sprite--right { left: 73%; }
+.stage[data-visible-count="1"] .sprite.is-visible { left: 50%; max-width: 75%; }
+.scene-label { position: absolute; z-index: 4; top: 20px; left: 24px; background: #202038b0; border: 1px solid #ffffff50; border-radius: 999px; padding: 10px 16px; font-size: .67rem; font-weight: 800; letter-spacing: .14em; }
+.scene-caption { position: absolute; z-index: 4; bottom: 18px; right: 24px; font-size: .69rem; font-weight: 700; letter-spacing: .1em; text-shadow: 0 1px 8px #000; }
+.panel { padding: 22px clamp(16px, 3vw, 35px) 23px; background: #20213c; border-top: 3px solid #e4a2c4; min-height: 216px; }
+.panel-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.speaker { background: #eaa5ce; color: #28203d; border-radius: 7px; padding: 7px 18px; min-width: 100px; font-weight: 800; }
+.hint { font-size: .64rem; letter-spacing: .08em; color: #a79fbc; }
+.dialogue { min-height: 45px; line-height: 1.65; font-size: 1.06rem; margin: 14px 0; }
+.choices { display: grid; gap: 9px; }
+.choice { width: 100%; background: #3f3b64; color: white; border: 1px solid #aea2d164; text-align: left; border-radius: 10px; padding: 12px 16px; transition: background .15s; }
+.choice:hover { background: #69547e; }
+.panel-bottom { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-top: 16px; }
+.note { color: #b7b0c8; font-size: .73rem; }
+.next { background: #f2a9d4; color: #221c33; border: none; font-weight: 800; border-radius: 9px; padding: 11px 19px; }
+.next:hover { background: #ffcee8; }
+.next[hidden] { display: none; }
+
+#dialogue {
+  white-space: pre-line;
+}
+
+/* ===== Player status: Health / Money / Fullness ===== */
+.stats { align-items: stretch; }
+.stats .stat-unit { color: #bdb1d1; font-size: .68em; font-weight: 600; }
+.stats .stat-currency { color: #d6bdd5; font-size: .72em; margin-right: 2px; }
+.stats .stat-meter {
+  display: block;
+  height: 5px;
+  background: #ffffff24;
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 7px 0 5px;
+}
+.stats .stat-meter--empty { visibility: hidden; }
+.stats .stat-meter-fill {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: #7bc2a0;
+  border-radius: inherit;
+  transition: width .2s ease;
+}
+.stats #fullness-meter .stat-meter-fill { background: #8caee7; }
+.stats #fullness-meter.is-overfull .stat-meter-fill { background: #f2a36b; }
+.stats #health-meter.is-low .stat-meter-fill { background: #ec8f90; }
+.stats .stat-meter.is-unavailable .stat-meter-fill { opacity: .25; }
+.stats .stat-status {
+  display: block;
+  color: #c2b8d3;
+  font-size: .65rem;
+  line-height: 1.25;
+  min-height: 2.5em;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 620px) { .toolbar { flex-wrap: wrap; gap: 8px; padding: 14px; } .stats { order: 3; width: 100%; justify-content: space-around; } .stats > .stat { flex: 1; } .stage { height: 330px; } .stage[data-visible-count="1"] .sprite.is-visible { max-width: 88%; height: 94%; } .stage[data-visible-count="2"] .sprite.is-visible { max-width: 58%; height: 88%; } .stage[data-visible-count="2"] .sprite--left { left: 27%; } .stage[data-visible-count="2"] .sprite--right { left: 73%; } .scene-caption { display: none; } .hint { font-size: .56rem; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* Landscape dual sprite positioning */
+@media (min-width: 621px) and (orientation: landscape) {
+
+  /* 只有雙人出場才套用 */
+  .stage:has(.sprite--left.is-visible):has(.sprite--right.is-visible)
+  .sprite.is-visible {
+    height: 115%;
+    width: auto;
+    max-width: none;
+    bottom: -10%;
+  }
+
+  /* Rui 靠近中央 */
+  .stage:has(.sprite--left.is-visible):has(.sprite--right.is-visible)
+  .sprite--left {
+    left: 38% !important;
+  }
+
+  /* Honami 靠近中央 */
+  .stage:has(.sprite--left.is-visible):has(.sprite--right.is-visible)
+  .sprite--right {
+    left: 64% !important;
+  }
+
+}
+
+
+/* ===== Landscape Layout ===== */
+
+/* 電腦橫屏 */
+@media (min-width: 900px) and (orientation: landscape) {
+
+  /* 放寬整個遊戲的寬度 */
+  .game {
+    width: min(1200px, calc(100vw - 24px));
+  }
+
+  /* 放大角色舞台 */
+  .stage {
+    height: clamp(400px, 60dvh, 660px);
+  }
+
+  /* 縮小對話框佔用的空間 */
+  .panel {
+    min-height: 175px;
+    padding: 16px 26px;
+  }
+
+  .panel-bottom {
+    margin-top: 10px;
+  }
+}
+
+/* 手機橫屏 */
+@media (max-width: 899px) and (orientation: landscape) {
+
+  body {
+    display: block;
+    padding: 0;
+  }
+
+  .game {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .stage {
+    height: 65dvh;
+    min-height: 250px;
+  }
+
+  .panel {
+    min-height: 155px;
+    padding: 12px 18px;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   Portrait phone layout (append AFTER all other media rules)
+   Compatible with dual sprites + speaker focus.
+   --------------------------------------------------------- */
+@media (max-width: 620px) and (orientation: portrait) {
+  html, body { width: 100%; }
+  body { display: block; padding: 0; }
+  .game {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 8px;
+    padding: 10px 12px;
+  }
+  .toolbar > div:first-child { grid-column: 1; grid-row: 1; }
+  .toolbar h1 { font-size: 1.15rem; }
+  .eyebrow { font-size: .54rem; }
+  .restart { grid-column: 2; grid-row: 1; padding: 8px 11px; font-size: .75rem; }
+  .stats {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    gap: 0;
+    order: initial;
+  }
+  .stats > .stat { min-width: 0; padding: 4px; }
+  .stats .stat-label { font-size: .55rem; }
+  .stats .stat-value { font-size: 1rem; margin-top: 1px; }
+  .stage {
+    height: auto;
+    min-height: 240px;
+    flex: 1 1 auto;
+  }
+  .background { object-fit: cover; object-position: center; }
+  .sprite { bottom: -1%; }
+  .stage[data-visible-count="1"] .sprite.is-visible {
+    height: 97%;
+    max-width: 88%;
+  }
+  .stage[data-visible-count="2"] .sprite.is-visible {
+    height: 88%;
+    max-width: 54%;
+  }
+  .stage[data-visible-count="2"] .sprite--left { left: 26%; }
+  .stage[data-visible-count="2"] .sprite--right { left: 74%; }
+  .scene-label { top: 10px; left: 10px; padding: 6px 10px; font-size: .56rem; }
+  .scene-caption { display: none; }
+  .panel {
+    flex: 0 0 auto;
+    max-height: 46dvh;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 12px 14px max(12px, env(safe-area-inset-bottom));
+  }
+  .speaker { min-width: 0; font-size: .85rem; padding: 6px 11px; }
+  .hint { font-size: .54rem; text-align: right; }
+  .dialogue { min-height: 36px; line-height: 1.5; font-size: 1rem; margin: 9px 0; }
+  .choices { gap: 7px; }
+  .choice { min-height: 44px; padding: 10px 12px; font-size: .95rem; }
+  .panel-bottom { margin-top: 8px; }
+  .note { font-size: .64rem; max-width: 62%; }
+  .next { min-height: 44px; padding: 10px 14px; }
+
+  /* Phone portrait sprite sizing */
+  /* SINGLE SPRITE - 放大 */
+  .stage:has(.sprite.is-visible):not(
+    :has(.sprite--left.is-visible):has(.sprite--right.is-visible)
+  ) .sprite.is-visible {
+    height: 115% !important;
+    width: auto !important;
+    max-width: none !important;
+    bottom: -15% !important;
+  }
+
+  /* 放大雙人立繪 */
+  .stage[data-visible-count="2"] .sprite.is-visible {
+    height: 115%;
+    width: auto;
+    max-width: none;
+    bottom: -15%;
+    object-fit: contain;
+  }
+
+  /* 讓兩人靠近並重疊 */
+  .stage[data-visible-count="2"] .sprite--left {
+    left: 28%;
+  }
+
+  .stage[data-visible-count="2"] .sprite--right {
+    left: 75%;
+  }
+
+  /* 說話的人站在前面 */
+  .stage[data-visible-count="2"] .sprite.is-visible:not(.is-dimmed) {
+    z-index: 3;
+  }
+
+  .stage[data-visible-count="2"] .sprite.is-visible.is-dimmed {
+    z-index: 2;
+  }
+ }
+
+/* Prevent accidental double-tap zoom */
+.game {
+  touch-action: manipulation;
+}
+
+/* Compact status descriptions for narrow phones */
+@media (max-width: 620px) and (orientation: portrait) {
+  .stats .stat-status { font-size: .57rem; line-height: 1.2; min-height: 2.4em; }
+  .stats .stat-meter { margin: 5px 0 4px; }
+  .stats > .stat { border-left-color: #ffffff18; }
+}
+
+
+/* ===== Desktop stat bar fix (does not change phone portrait) ===== */
+@media (min-width: 900px) {
+  /* Keep the title, all three stats and Restart in ONE tidy row. */
+  .toolbar {
+    display: grid;
+    grid-template-columns: minmax(165px, 1fr) minmax(390px, 525px) auto;
+    align-items: center;
+    column-gap: clamp(14px, 2vw, 26px);
+    padding: 12px 24px;
+  }
+  .toolbar > div:first-child { min-width: 0; }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    align-items: start;
+    width: 100%;
+    min-width: 0;
+  }
+  .stats > .stat {
+    min-width: 0;
+    flex: none;
+    padding: 4px 12px;
+    text-align: center;
+  }
+  .stats .stat-status {
+    min-height: 2.4em;
+    font-size: .63rem;
+    line-height: 1.2;
+  }
+  .stats .stat-meter { margin: 5px 0 4px; }
+  .restart { white-space: nowrap; }
+}
+
+/* Mid-size laptop/tablet: two neat header rows, never a wrapped stat. */
+@media (min-width: 621px) and (max-width: 899px) {
+  .toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: 12px;
+    padding: 14px 20px;
+  }
+  .toolbar > div:first-child { grid-column: 1; grid-row: 1; }
+  .restart { grid-column: 2; grid-row: 1; white-space: nowrap; }
+  .stats {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    min-width: 0;
+    width: 100%;
+  }
+  .stats > .stat { min-width: 0; flex: none; padding: 5px 10px; }
+  .stats .stat-status { min-height: 0; }
+}

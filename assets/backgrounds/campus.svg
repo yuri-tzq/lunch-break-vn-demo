@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-label="Stylized visual novel background: campus"><defs><linearGradient id="bg" x2="0.7" y2="1"><stop stop-color="#a5c6e5"/><stop offset="1" stop-color="#e7c8d7"/></linearGradient><linearGradient id="window" x2="0" y2="1"><stop stop-color="#e5f7ff"/><stop offset="1" stop-color="#a8c9dd"/></linearGradient></defs><rect width="1280" height="720" fill="url(#bg)"/><circle cx="1070" cy="100" r="230" fill="#fff" opacity=".12"/><circle cx="150" cy="95" r="150" fill="#fff" opacity=".10"/><rect y="472" width="1280" height="248" fill="#83ad98"/><path d="M0 560 Q280 490 570 560 T1280 548V720H0Z" fill="#b8c7b0"/>
+        <rect x="285" y="162" width="700" height="340" rx="12" fill="#f3e7dc"/><rect x="285" y="162" width="700" height="50" fill="#aa8ab7"/>
+        <path d="M255 162 L1015 162 L925 82 L342 82Z" fill="#5e6e94"/>
+        <g fill="#7790ac"><rect x="340" y="260" width="98" height="130" rx="7"/><rect x="475" y="260" width="98" height="130" rx="7"/><rect x="610" y="260" width="98" height="130" rx="7"/><rect x="745" y="260" width="98" height="130" rx="7"/><rect x="880" y="260" width="98" height="130" rx="7"/></g>
+        <rect x="576" y="396" width="130" height="106" fill="#956f83"/>
+        <g fill="#5f8b78"><circle cx="120" cy="320" r="145"/><circle cx="1140" cy="300" r="165"/></g>
+        <g fill="#917964"><rect x="106" y="350" width="32" height="230"/><rect x="1124" y="343" width="35" height="245"/></g><rect width="1280" height="720" fill="#8e75b2" opacity=".07"/></svg>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 560" role="img" aria-label="Momo normal character placeholder">
+<defs><linearGradient id="hair" x2="1" y2="1"><stop stop-color="#80699d"/><stop offset="1" stop-color="#493c75"/></linearGradient><linearGradient id="coat" x2="1" y2="1"><stop stop-color="#535479"/><stop offset="1" stop-color="#303350"/></linearGradient></defs>
+<!-- legs and shoes -->
+<path d="M136 407L128 526H165L182 412ZM194 410L195 526H232L221 402Z" fill="#46445c"/>
+<path d="M119 523Q127 516 161 521L167 541H112Q108 532 119 523ZM193 522Q212 515 230 520L243 541H185Q185 530 193 522Z" fill="#333045"/>
+<!-- hair behind -->
+<path d="M95 171Q89 70 179 58Q272 61 260 184L255 302Q225 322 207 292L115 307Q94 271 95 171Z" fill="url(#hair)"/>
+<!-- arms -->
+<path d="M120 275Q88 291 80 374L108 396L140 319ZM234 275Q265 289 274 372L248 397L217 323Z" fill="url(#coat)" stroke="#39384f" stroke-width="4"/>
+<path d="M78 368Q81 388 105 406L118 388L109 369Z" fill="#f4c6bc"/>
+<path d="M250 367L243 390L258 402Q280 382 277 369Z" fill="#f4c6bc"/>
+<!-- skirt -->
+<path d="M131 372L114 426Q174 449 248 426L230 375Z" fill="#393d5d" stroke="#e6c1d8" stroke-width="4"/>
+<!-- coat torso -->
+<path d="M146 261Q179 248 221 263L248 391Q180 408 112 388Z" fill="url(#coat)" stroke="#3d3857" stroke-width="4"/>
+<path d="M154 263L181 303L207 264L193 382L175 389Z" fill="#f7ece6"/>
+<path d="M179 305L164 337L181 351L198 337Z" fill="#d78fb0"/>
+<circle cx="185" cy="370" r="4" fill="#e0bbce"/>
+<!-- neck and head -->
+<rect x="166" y="227" width="34" height="54" rx="14" fill="#f3bfb2"/>
+<ellipse cx="179" cy="168" rx="75" ry="91" fill="#f7cabc"/>
+<circle cx="110" cy="180" r="13" fill="#f4bfb5"/><circle cx="249" cy="180" r="13" fill="#f4bfb5"/>
+<!-- side hair and bangs -->
+<path d="M103 164Q105 100 136 84Q176 55 224 87Q251 106 255 165L231 141L215 109Q186 143 146 147L133 124Z" fill="url(#hair)"/>
+<path d="M110 139Q108 218 128 245L105 282Q78 212 100 128Z" fill="url(#hair)"/>
+<path d="M249 138Q258 217 235 247L258 280Q282 208 256 127Z" fill="url(#hair)"/>
+<!-- face -->
+<ellipse cx="145" cy="172" rx="7" ry="10" fill="#584557"/><ellipse cx="212" cy="172" rx="7" ry="10" fill="#584557"/>
+<ellipse cx="120" cy="193" rx="13" ry="5" fill="#ee9f9f" opacity=".4"/><ellipse cx="236" cy="193" rx="13" ry="5" fill="#ee9f9f" opacity=".4"/>
+<path d="M174 204Q182 207 192 204" fill="none" stroke="#b65f70" stroke-width="4" stroke-linecap="round"/>
+<path d="M117 91Q119 65 160 67" stroke="#a69ac5" stroke-width="8" stroke-linecap="round" fill="none"/>
+</svg>
