@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#17152c">
+  <title>Lunch Break! — Your Ending</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --accent: #bda8ff;
+      --accent-rgb: 189,168,255;
+      --warm: #ffc7ab;
+      --page: #131126;
+      --panel: #211d37;
+      --text: #fcf9ff;
+      --subtext: #c9c2d8;
+      --muted: #9b92b1;
+      --stroke: rgba(241,232,255,.13);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { min-height: 100%; }
+    body { margin:0; min-height:100vh; color:var(--text); background: radial-gradient(ellipse at 10% 10%, #322648 0, transparent 40%), radial-gradient(ellipse at 92% 80%, #232e52 0, transparent 42%), var(--page); overflow-x: hidden; }
+    body::before { content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.25; background-image: radial-gradient(#fff 0.7px,transparent .8px); background-size:27px 27px; mask-image:linear-gradient(110deg,transparent,black 28%,transparent 85%); }
+    button, a { font:inherit; }
+    button { cursor:pointer; }
+    button:focus-visible, a:focus-visible, select:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+    a { color: inherit; }
+    .shell { width:min(1160px,calc(100% - 40px)); margin: 0 auto; padding: 25px 0 45px; }
+    .top { display:flex; align-items:center; justify-content:space-between; gap:16px; margin:0 0 22px; }
+    .brand { display:flex; align-items:center; gap:11px; text-decoration:none; font-weight:900; font-size:20px; letter-spacing:-.06em; }
+    .brand-bubble { display:grid; place-items:center; width:39px;height:39px; border-radius:13px; background:linear-gradient(135deg,#f4b6d5,#facf9f); color:#302342; box-shadow:0 8px 24px #f2b4d32c; font-size:19px; }
+    .brand strong { color:#ffbadb; }
+    .topnote { display:flex;align-items:center;gap:9px; text-transform:uppercase; font-size:10px; font-weight:900;letter-spacing:.19em;color:#d7cae7; }
+    .dot {width:7px;height:7px; border-radius:50%; background:var(--accent);box-shadow:0 0 12px var(--accent); }
+    .journey { border:1px solid var(--stroke);border-radius:17px; background:#ffffff08; padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:19px; }
+    .journey-step { display:flex;align-items:center;gap:8px;color:#a79dbd;text-transform:uppercase;letter-spacing:.14em;font-size:10px;font-weight:850;white-space:nowrap; }
+    .journey-step .marker {height:22px;width:22px;border:1px solid #ffffff35;border-radius:50%;display:grid;place-items:center;font-size:10px;color:#e2d9ec; }
+    .journey-step.current {color:var(--accent)}
+    .journey-step.current .marker {background:var(--accent);color:#20192c;border-color:transparent;box-shadow:0 0 17px rgba(var(--accent-rgb),.4);font-weight:900;}
+    .journey-line {height:1px;flex:1;max-width:135px;background:linear-gradient(90deg,#ffffff22,#ffffff60); }
+    .board { background:linear-gradient(145deg,#29233f,#1e1a31 55%,#24203b); border:1px solid #ffffff24; border-radius:26px;box-shadow:0 30px 95px #03010f7e;overflow:hidden;position:relative; }
+    .board::before { content:"";position:absolute;inset:0 0 auto;height:4px;background:linear-gradient(90deg,#f0abc9,var(--accent),#f6d7aa); }
+    .hero { display:grid;grid-template-columns:1.11fr .89fr;min-height:416px;position:relative; }
+    .hero-copy { position:relative;z-index:2;padding:50px 26px 42px 51px; }
+    .eyebrow { display:flex;align-items:center;gap:10px;text-transform:uppercase;letter-spacing:.21em;font-weight:900;color:var(--accent);font-size:11px; margin-bottom:23px; }
+    .eyebrow::before {content:"";width:26px;height:2px;background:var(--accent);border-radius:10px;}
+    h1 { margin:0 0 16px;max-width:600px; font-weight:950; font-size:clamp(42px,5vw,74px);line-height:.99;letter-spacing:-.067em;text-wrap:balance; }
+    .hero-description {color:#d2cadf;font-size:16px;line-height:1.75;max-width:450px;margin:22px 0 0;}
+    .color-word {color:var(--accent);}
+    .mini-tag { display:inline-flex;align-items:center;gap:8px;padding:9px 12px;margin-top:24px;border-radius:100px;border:1px solid rgba(var(--accent-rgb),.35);background:rgba(var(--accent-rgb),.1);font-size:11px;letter-spacing:.08em;font-weight:850;color:var(--accent);}
+    .illustration {position:relative;min-height:390px;overflow:hidden;isolation:isolate;display:flex;align-items:center;justify-content:center;}
+    .illustration::before {content:"";position:absolute;inset:-23%;background:radial-gradient(circle,rgba(var(--accent-rgb),.28),transparent 58%);z-index:-1;}
+    .orb {position:absolute; width:335px;height:335px; border-radius:50%;border:1px solid rgba(var(--accent-rgb),.22);box-shadow:0 0 0 28px rgba(var(--accent-rgb),.035),0 0 0 62px rgba(var(--accent-rgb),.03);top:45%;left:50%;transform:translate(-50%,-50%);}
+    .orb::before,.orb::after {content:"✦";position:absolute;font-size:24px;color:var(--accent);}
+    .orb::before{top:17%;left:2%;}.orb::after{right:8%;bottom:9%;font-size:17px;}
+    .receipt { position:relative;width:242px;min-height:290px;transform:rotate(6deg);border-radius:17px;background:linear-gradient(155deg,#fffbf1,#f7e9e8);color:#372b47; box-shadow: 0 25px 50px #0905148a, 0 8px 0 #e9d9d8; padding:22px 23px 24px;text-align:center;animation:float 6s ease-in-out infinite; }
+    .receipt::before {content:"";position:absolute;inset:9px;border:1px solid #b7a2b651;border-radius:12px;pointer-events:none;}
+    .receipt-header {font-size:10px;letter-spacing:.28em;font-weight:900;color:#937f90;}
+    .receipt-emoji{font-size:88px;line-height:1.4;margin:5px 0 3px;filter:drop-shadow(0 12px 6px #4a2a4920);}
+    .receipt-rule{width:100%;border-top:2px dashed #d5bbca;margin:8px 0 15px;}
+    .receipt-label {font-size:11px;font-weight:950;letter-spacing:.13em;text-transform:uppercase;}
+    .receipt-sub {font-size:10px;margin:8px 0 0;color:#827584;letter-spacing:.09em;text-transform:uppercase;}
+    .sticker {position:absolute;right:10%;top:13%;width:85px;height:85px; border-radius:50%;background:#f9bedb;color:#553457;border:3px solid #ffffff99;box-shadow:0 12px 26px #0005;display:flex;align-items:center;justify-content:center;text-align:center;transform:rotate(15deg);font-size:12px;font-weight:950;line-height:1.15;letter-spacing:.08em;}
+    .tiny-star {position:absolute;color:#ffd39e;font-size:31px;left:10%;bottom:20%;animation:twinkle 3s infinite;}
+    .section-rule {height:1px;background:var(--stroke);margin:0 32px;}
+    .lower {padding:30px 37px 36px;}
+    .section-head {display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:17px;}
+    .section-title {margin:0;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:900;color:#dfd3eb;}
+    .section-meta {text-transform:uppercase;font-size:10px;letter-spacing:.12em;color:#a89cb9;}
+    .stats {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px; }
+    .stat { padding:18px 20px 20px;border-radius:15px;background:#ffffff08;border:1px solid #ffffff13;min-width:0; }
+    .stat-top{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#aca1c1;font-weight:850;letter-spacing:.12em;font-size:10px;}
+    .stat-icon {font-size:16px;letter-spacing:normal;}
+    .stat-num {display:flex;align-items:baseline;gap:5px;font-size:35px;letter-spacing:-.045em;font-weight:900;margin:5px 0 13px;}
+    .stat-unit {font-size:12px;font-weight:750;color:#afa5c2;letter-spacing:0;}
+    .track {height:7px;background:#121023;border-radius:30px;overflow:hidden;border:1px solid #ffffff10;}
+    .fill {width:0;height:100%;background:var(--accent);border-radius:30px;transition:width 900ms cubic-bezier(.19,1,.22,1);}
+    .fill.money {background:#ffc4a1;}
+    .fill.fullness {background:#f1a6c9;}
+    .stat-under {font-size:10px;color:#938ba8;margin-top:11px;}
+    .dialogue-lesson {display:grid;grid-template-columns:1.05fr .95fr;gap:17px;margin-top:20px;}
+    .conversation,.takeaway {background:#ffffff08;border:1px solid #ffffff13;border-radius:17px;padding:22px 23px 23px;}
+    .talk {display:flex;align-items:flex-start;gap:12px;margin-top:17px;}
+    .avatar {width:35px;height:35px;border-radius:12px;display:grid;place-items:center;flex:none;font-weight:950;font-size:14px;}
+    .avatar.rui {background:#a998ea26;color:#cab5ff;border:1px solid #c3aaff44;}
+    .avatar.honami {background:#f7b1d424;color:#ffb8d7;border:1px solid #ffbfdb49;}
+    .talk strong {display:block;font-size:12px;letter-spacing:.06em;margin:1px 0 4px;color:#eae1f8;}
+    .talk p {margin:0;color:#cec6dc;line-height:1.55;font-size:13px;}
+    .takeaway {background:linear-gradient(145deg,rgba(var(--accent-rgb),.12),#ffffff04);display:flex;flex-direction:column;justify-content:space-between;gap:20px;}
+    .takeaway .quote-mark {font-size:34px;color:var(--accent);line-height:.7;margin-top:18px;}
+    .takeaway p {font-size:16px;line-height:1.55;color:#ece6f2;margin:10px 0 0;max-width:360px;}
+    .takeaway .fine {color:#a99dba;font-size:11px;line-height:1.45;}
+    .footer-actions {display:flex;flex-wrap:wrap;gap:11px;justify-content:space-between;align-items:center;margin-top:23px;}
+    .buttons {display:flex;flex-wrap:wrap;gap:10px;}
+    .btn { display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 22px;border-radius:12px;font-size:13px;font-weight:900;text-decoration:none; transition:transform .18s,background .18s;white-space:nowrap;}
+    .btn:hover {transform:translateY(-2px);}
+    .btn-primary {border:0;background:var(--accent);color:#20172a;box-shadow:0 8px 26px rgba(var(--accent-rgb),.23);}
+    .btn-secondary{color:#fff;border:1px solid #ffffff36;background:#ffffff0b;}
+    .signature {font-size:10px;color:#827890;text-transform:uppercase;letter-spacing:.13em;}
+    .preview { margin-top:18px;padding:15px 19px;border:1px dashed #9e87b165;border-radius:14px;background:#ffffff08;display:none;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap; }
+    .preview.visible {display:flex;}
+    .preview-label {font-size:12px;color:#d7cce5;}
+    .preview-controls{display:flex;align-items:center;gap:10px;}
+    select {border:1px solid #ffffff4a;background:#29213e;color:#fff;padding:9px 28px 9px 10px;border-radius:9px;font-size:12px;max-width:240px;}
+    .preview-help{font-size:11px;color:#a99db9;margin:0;}
+    .toast {position:fixed;left:50%;bottom:25px;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:12px 18px;border-radius:12px;background:#fff;color:#211a37;box-shadow:0 10px 40px #0008;font-size:13px;font-weight:850;transition:all .25s;z-index:50;}
+    .toast.show{opacity:1;transform:translate(-50%,0);}
+    .animate {animation:rise .55s both;}
+    @keyframes float {0%,100%{transform:rotate(6deg) translateY(0);}50%{transform:rotate(3deg) translateY(-11px);}}
+    @keyframes rise {from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes twinkle{0%,100%{opacity:.6;transform:scale(.9)}50%{opacity:1;transform:scale(1.12)}}
+    @media(max-width:830px){.hero{grid-template-columns:1fr;}.hero-copy{padding:43px 33px 18px;}.illustration{min-height:300px}.receipt{transform:scale(.82) rotate(6deg);animation:none;}.sticker{right:20%;top:5%;}.journey-line{max-width:50px}.lower{padding:25px 23px}.dialogue-lesson{grid-template-columns:1fr 1fr}.section-rule{margin:0 20px}}
+    @media(max-width:610px){.shell{width:min(100% - 22px,520px);padding-top:14px}.top{margin-bottom:13px}.topnote{font-size:9px;letter-spacing:.06em}.journey{padding:12px}.journey-step{font-size:8px;letter-spacing:.01em;gap:4px}.journey-step .marker{width:17px;height:17px}.journey-line{min-width:5px}.board{border-radius:18px}.hero-copy{padding:34px 23px 0}.eyebrow{font-size:10px}.hero-description{font-size:14px;line-height:1.65}h1{font-size:clamp(41px,11vw,61px)}.illustration{min-height:267px}.orb{width:230px;height:230px}.receipt{width:204px;min-height:224px;padding:16px;transform:scale(.88) rotate(6deg)}.receipt-emoji{font-size:66px}.receipt-rule{margin:4px 0 11px}.sticker{width:67px;height:67px;font-size:10px;right:11%;top:8%}.tiny-star{left:14%;bottom:20%}.stats{gap:7px}.stat{padding:12px 9px}.stat-top{font-size:9px;letter-spacing:.03em}.stat-icon{font-size:13px}.stat-num{font-size:27px;margin-bottom:7px}.stat-unit{font-size:10px}.stat-under{font-size:9px;line-height:1.35}.lower{padding:24px 13px}.section-head{padding:0 5px}.section-title{font-size:11px}.dialogue-lesson{grid-template-columns:1fr}.conversation,.takeaway{padding:19px 17px}.footer-actions{align-items:stretch;}.buttons{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px}.btn{padding:12px 8px;font-size:12px}.signature{width:100%;text-align:center}.preview{margin-bottom:12px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="top" aria-label="Page header">
+      <a class="brand" href="index.html" aria-label="Lunch Break home"><span class="brand-bubble">🍓</span><span>Lunch <strong>Break!</strong></span></a>
+      <div class="topnote"><span class="dot"></span> A story about everyday choices</div>
+    </header>
+    <nav class="journey" aria-label="Your story progress">
+      <div class="journey-step"><span class="marker">✓</span> Morning</div><span class="journey-line"></span>
+      <div class="journey-step"><span class="marker">✓</span> Lunch</div><span class="journey-line"></span>
+      <div class="journey-step"><span class="marker">✓</span> Afternoon</div><span class="journey-line"></span>
+      <div class="journey-step current"><span class="marker">★</span> Ending</div>
+    </nav>
+    <main class="board animate" id="board">
+      <section class="hero" aria-label="Your ending">
+        <div class="hero-copy">
+          <div class="eyebrow" id="chapter">Ending 01 / 05 · Day complete</div>
+          <h1 id="title">Healthy<br><span class="color-word">Survivor.</span></h1>
+          <p class="hero-description" id="description">Your choices added up to a pretty good day. One small step at a time!</p>
+          <div class="mini-tag"><span>✦</span><span id="status-tag">A DAY WELL SPENT</span></div>
+        </div>
+        <div class="illustration" aria-hidden="true">
+          <div class="orb"></div>
+          <div class="tiny-star">✧</div>
+          <div class="receipt"><div class="receipt-header">LUNCH BREAK · RECEIPT</div><div class="receipt-emoji" id="hero-emoji">🏆</div><div class="receipt-rule"></div><div class="receipt-label" id="receipt-label">DAY COMPLETED</div><p class="receipt-sub" id="receipt-sub">No returns. Just memories.</p></div>
+          <div class="sticker">THE<br>END!</div>
+        </div>
+      </section>
+      <div class="section-rule"></div>
+      <section class="lower">
+        <div class="section-head"><h2 class="section-title">Your final stats</h2><span class="section-meta" id="run-label">Your journey</span></div>
+        <div class="stats">
+          <div class="stat"><div class="stat-top">HEALTH <span class="stat-icon">♡</span></div><div class="stat-num"><span id="health">55</span><span class="stat-unit">/ 100</span></div><div class="track"><div class="fill" id="health-fill"></div></div><div class="stat-under">Your in-game health score</div></div>
+          <div class="stat"><div class="stat-top">FULLNESS <span class="stat-icon">◕</span></div><div class="stat-num"><span id="fullness">60</span><span class="stat-unit">/ 100</span></div><div class="track"><div class="fill fullness" id="fullness-fill"></div></div><div class="stat-under">How full you are right now</div></div>
+          <div class="stat"><div class="stat-top">MONEY <span class="stat-icon">✦</span></div><div class="stat-num"><span class="stat-unit">RM</span><span id="money">18</span></div><div class="track"><div class="fill money" id="money-fill"></div></div><div class="stat-under">What's left in your wallet</div></div>
+        </div>
+        <div class="dialogue-lesson">
+          <section class="conversation" aria-label="Friends' reactions"><h2 class="section-title">Messages from your friends</h2>
+            <div class="talk"><span class="avatar rui">R</span><div><strong>RUI</strong><p id="rui">Fufu~ Not bad at all.</p></div></div>
+            <div class="talk"><span class="avatar honami">H</span><div><strong>HONAMI</strong><p id="honami">I'm glad you're feeling good!</p></div></div>
+          </section>
+          <section class="takeaway" aria-label="What you learned"><div><h2 class="section-title">A little something to remember</h2><div class="quote-mark">“</div><p id="lesson">Small choices can make a big difference over time.</p></div><div class="fine">Everyday habits matter more than any single meal. These game scores are fictional, not medical assessments.</div></section>
+        </div>
+        <div class="footer-actions"><div class="buttons"><a class="btn btn-primary" href="index.html" id="replay">↻ &nbsp; Play again</a><button class="btn btn-secondary" id="copy" type="button">↗ &nbsp; Copy my result</button></div><span class="signature">Your story, your choices. ♡</span></div>
+      </section>
+    </main>
+    <aside class="preview" id="preview" aria-label="Developer preview"><div><div class="preview-label"><strong>✦ Preview studio</strong> — explore all five endings</div><p class="preview-help">Only visible in demo mode or with ?preview=1. Players won't see this.</p></div><div class="preview-controls"><label for="preview-ending" class="preview-help">Ending</label><select id="preview-ending"><option value="healthy">01 · Healthy Survivor</option><option value="financial">02 · Financial Disaster</option><option value="food_coma">03 · Food Coma</option><option value="hungry">04 · Hungry Survivor</option><option value="normal">05 · Just Another Day</option></select></div></aside>
+  </div>
+  <div role="status" class="toast" id="toast"></div>
+  <script>
+    'use strict';
+    // All themes and dialogue live here. Edit these strings to match your final story.
+    const endings = {
+      healthy: {
+        index:'01', title:'Healthy', colored:'Survivor.', emoji:'🏆', accent:'#92eed1', rgb:'146,238,209',
+        description:'A hectic day, a thoughtful finish. You made choices that helped you feel balanced and satisfied!',
+        tag:'THE MINDFUL ENDING', receipt:'GOOD CHOICES MADE', sub:'Well done, you!',
+        rui:'Oho? Perhaps I should take a few notes from you... though the vegetables may have to wait. Fufu~',
+        honami:'Hehe! You did really well today! Remember, you don\'t have to be perfect to make good choices.',
+        lesson:'Finding balance is a habit, not a one-day challenge. Keep making choices that work for you.'
+      },
+      financial: {
+        index:'02', title:'Financial', colored:'Disaster.', emoji:'💸', accent:'#ffd49c', rgb:'255,212,156',
+        description:'Your stomach may be satisfied, but your poor wallet has officially filed a complaint.',
+        tag:'THE BROKE ENDING', receipt:'WALLET: DEFEATED', sub:'Maybe budget next time?',
+        rui:'My, my. It seems your stomach survived... but your wallet didn\'t. Fufu~',
+        honami:'Oh dear... Maybe planning a food budget could help you make more affordable choices next time!',
+        lesson:'Good food choices also fit your budget. A little planning can save a lot of stress.'
+      },
+      food_coma: {
+        index:'03', title:'Food', colored:'Coma.', emoji:'😵‍💫', accent:'#f5b3d5', rgb:'245,179,213',
+        description:'Your grand feast was legendary. Unfortunately, so is how uncomfortably full you feel right now.',
+        tag:'THE TOO-FULL ENDING', receipt:'PORTION: MAXED OUT', sub:'...probably worth it?',
+        rui:'So the consequences of your grand feast have finally arrived? Ahaha, what an eventful evening.',
+        honami:'Please take it easy! Next time, try listening to your hunger and fullness signals.',
+        lesson:'Portion sizes should fit your hunger and needs. More food is not always more satisfying.'
+      },
+      hungry: {
+        index:'04', title:'Hungry', colored:'Survivor.', emoji:'🍜', accent:'#ffab9b', rgb:'255,171,155',
+        description:'You survived a long day of school... but your stomach is clearly demanding a sequel.',
+        tag:'THE STILL-HUNGRY ENDING', receipt:'STOMACH: STILL LOADING', sub:'Where is the fridge?',
+        rui:'My, my. It seems your stomach has some unfinished business. Shall I wish you luck on your kitchen expedition?',
+        honami:'If you\'re still hungry, it\'s okay to eat! You need enough energy for your day.',
+        lesson:'Eating enough matters. Regular, satisfying meals can help you keep up with daily activities.'
+      },
+      normal: {
+        index:'05', title:'Just Another', colored:'Day.', emoji:'🌤️', accent:'#c7b8ff', rgb:'199,184,255',
+        description:'Some great choices, some questionable ones, and plenty of memories. Just another day with friends!',
+        tag:'THE EVERYDAY ENDING', receipt:'DAY: SUCCESSFULLY LIVED', sub:'Tomorrow is a new day.',
+        rui:'Fufu~ What a fascinating day. I wonder what sort of decisions you\'ll make tomorrow?',
+        honami:'We don\'t need to be perfect every day! I\'m glad we had fun together.',
+        lesson:'Healthy eating is about overall patterns, not being perfect at every single meal.'
+      }
+    };
+    const $ = (id) => document.getElementById(id);
+    const query = new URLSearchParams(location.search);
+    const validNumber = (s) => s !== null && s.trim() !== '' && Number.isFinite(Number(s));
+    const hasStats = ['health','fullness','money'].every(k => validNumber(query.get(k)));
+    const stats = hasStats
+      ? { health:Number(query.get('health')), fullness:Number(query.get('fullness')), money:Number(query.get('money')) }
+      : { health:55, fullness:60, money:18 }; // CLEARLY LABELED sample for preview only
+    const clamp = (value,min,max) => Math.max(min,Math.min(max,value));
+    const calculate = () => {
+      if (stats.fullness >= 85) return 'food_coma';
+      if (stats.fullness <= 20) return 'hungry';
+      if (stats.money <= 3) return 'financial';
+      if (stats.health >= 52 && stats.fullness >= 35 && stats.fullness <= 80) return 'healthy';
+      return 'normal';
+    };
+    const requested = (query.get('ending') || '').toLowerCase().replace(/-/g,'_');
+    const keys = Object.keys(endings);
+    let current = keys.includes(requested) ? requested : calculate();
+    const previewEnabled = query.get('preview') === '1' || !hasStats;
+    function render(key) {
+      const data = endings[key];
+      document.documentElement.style.setProperty('--accent',data.accent);
+      document.documentElement.style.setProperty('--accent-rgb',data.rgb);
+      $('chapter').textContent = 'Ending '+data.index+' / 05 · Day complete';
+      $('title').replaceChildren(document.createTextNode(data.title),document.createElement('br'));
+      const accentSpan = document.createElement('span'); accentSpan.className='color-word'; accentSpan.textContent=data.colored; $('title').append(accentSpan);
+      $('description').textContent=data.description;
+      $('status-tag').textContent=data.tag;
+      $('hero-emoji').textContent=data.emoji;
+      $('receipt-label').textContent=data.receipt;
+      $('receipt-sub').textContent=data.sub;
+      $('rui').textContent=data.rui;
+      $('honami').textContent=data.honami;
+      $('lesson').textContent=data.lesson;
+      $('run-label').textContent=hasStats?'YOUR JOURNEY':'SAMPLE STATS · PREVIEW';
+      ['health','fullness','money'].forEach(name=>{
+        const val=stats[name]; $(''+name).textContent=Number.isInteger(val)?String(val):val.toFixed(1);
+        $(name+'-fill').style.width=clamp(name==='money'?val/40*100:val,0,100)+'%';
+      });
+      $('preview-ending').value=key;
+      document.title=`${data.title} ${data.colored} — Lunch Break!`;
+      current=key;
+    }
+    if (previewEnabled) $('preview').classList.add('visible');
+    $('preview-ending').addEventListener('change',e=>render(e.target.value));
+    let toastTimer;
+    function notify(message){
+      $('toast').textContent=message;$('toast').classList.add('show');
+      clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2200);
+    }
+    $('copy').addEventListener('click',async()=>{
+      const d=endings[current];
+      const result=`🍓 Lunch Break! — ${d.title} ${d.colored}\n${d.description}\n${hasStats?`Health ${stats.health}/100 · Fullness ${stats.fullness}/100 · RM${stats.money}`:'Preview result'}`;
+      try { await navigator.clipboard.writeText(result);notify('Result copied! ✦'); }
+      catch(e){
+        const temporary=document.createElement('textarea'); temporary.value=result;temporary.style.position='fixed';temporary.style.opacity='0'; document.body.append(temporary);temporary.select();
+        try{if(document.execCommand('copy')) notify('Result copied! ✦');else notify('Copy unavailable in this browser.');}
+        catch(_){notify('Copy unavailable in this browser.');}
+        temporary.remove();
+      }
+    });
+    render(current);
+  </script>
+</body>
+</html>

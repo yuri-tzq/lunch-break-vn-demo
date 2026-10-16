@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1b1632">
+  <meta name="description" content="Lunch Break! — A short interactive story about food choices and everyday decisions.">
+  <title>Lunch Break! | Start</title>
+  <style>
+    :root { font-family: 'Segoe UI', Arial, sans-serif; color: #fff9ff; }
+    * { box-sizing: border-box; }
+    html, body { width: 100%; min-height: 100%; margin: 0; }
+    body { background: #292344; }
+    main {
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      isolation: isolate;
+      position: relative;
+      padding: 36px 22px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(24,19,42,.50), rgba(24,19,42,.70)),
+        url('assets/backgrounds/campus.jpg') center / cover no-repeat,
+        linear-gradient(135deg, #66538a 0%, #484777 53%, #29243f 100%);
+    }
+    main::after {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 15%, rgba(11,9,29,.36) 100%);
+      pointer-events: none;
+    }
+    .content { width: min(100%, 620px); filter: drop-shadow(0 3px 16px #100c1e70); }
+    h1 { font-weight: 900; font-size: clamp(3.5rem, 12vw, 6.3rem); letter-spacing: -.075em; line-height: .98; margin: 0 0 22px; }
+    h1 span { color: #ffc3df; }
+    p { margin: 0 auto 34px; max-width: 430px; font-size: clamp(.95rem, 2.3vw, 1.12rem); line-height: 1.65; color: #f6eaf9; }
+    a.start {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      text-decoration: none;
+      background: #f5b7d8;
+      color: #2a1d39;
+      padding: 17px 34px;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 850;
+      box-shadow: 0 12px 32px #120c2780;
+      transition: transform .2s, background .2s;
+    }
+    a.start:hover { transform: translateY(-3px); background: #ffd2e9; }
+    a.start:focus-visible { outline: 3px solid white; outline-offset: 5px; }
+    @media (max-width: 480px) { h1 { margin-bottom: 18px; } p { margin-bottom: 29px; } }
+    @media (prefers-reduced-motion: reduce) { a.start { transition: none; } }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="content" aria-label="Welcome to Lunch Break">
+      <h1>Lunch <span>Break!</span></h1>
+      <p>A short visual novel about everyday food choices.<br>Spend a day with Rui and Honami — your choices shape the ending!</p>
+      <a class="start" href="index.html">Start Game <span aria-hidden="true">→</span></a>
+    </section>
+  </main>
+</body>
+</html>
