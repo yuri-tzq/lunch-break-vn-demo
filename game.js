@@ -8,7 +8,7 @@ const backgroundFiles = {
   campus:     { file: 'assets/backgrounds/campus.jpg',     label: 'CAMPUS' },
   class:      { file: 'assets/backgrounds/class.jpg',      label: 'CLASS' },
   fastfood:   { file: 'assets/backgrounds/fastfood.png',   label: 'FAST-FOOD RESTAURANT' },
-  foodcourt:  { file: 'assets/backgrounds/foodcourt.jpg',  label: 'LUNCH BREAK' },
+  foodcourt:  { file: 'assets/backgrounds/foodcourt.jpg',  label: 'FOOD COURT' },
   park:       { file: 'assets/backgrounds/park.svg',       label: 'SCHOOL GARDEN' },
   street:     { file: 'assets/backgrounds/street.jpg',     label: 'STREET' },
 
