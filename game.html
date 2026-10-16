@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Lunch Break! | An Ink Visual Novel</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- inkjs runs the story.json exported from Inky. An internet connection is needed for this CDN. -->
+  <script defer src="https://cdn.jsdelivr.net/npm/inkjs/dist/ink-full.js"></script>
+  <script defer src="game.js"></script>
+  <script defer src="ending-bridge.js"></script>
+</head>
+<body>
+  <main class="game" aria-label="Lunch Break Visual Novel">
+    <header class="toolbar">
+      <div>
+        <div class="eyebrow">INK × VISUAL NOVEL</div>
+        <h1>Lunch Break<span class="accent">!</span></h1>
+      </div>
+      <div class="stats" aria-label="Player status">
+        <div class="stat" aria-label="Health">
+          <span class="stat-label">HEALTH</span>
+          <strong class="stat-value"><span id="health">—</span><span class="stat-unit">/100</span></strong>
+          <span class="stat-meter" id="health-meter" role="progressbar" aria-label="Health" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <span class="stat-meter-fill" id="health-bar"></span>
+          </span>
+          <span class="stat-status" id="health-status" aria-live="polite">Loading...</span>
+        </div>
+        <div class="stat" aria-label="Money">
+          <span class="stat-label">MONEY</span>
+          <strong class="stat-value"><span class="stat-currency">RM</span><span id="money">—</span></strong>
+          <span class="stat-meter stat-meter--empty" aria-hidden="true"></span>
+          <span class="stat-status" id="money-status" aria-live="polite">Loading...</span>
+        </div>
+        <div class="stat" aria-label="Fullness">
+          <span class="stat-label">FULLNESS</span>
+          <strong class="stat-value"><span id="fullness">—</span><span class="stat-unit">/100</span></strong>
+          <span class="stat-meter" id="fullness-meter" role="progressbar" aria-label="Fullness" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <span class="stat-meter-fill" id="fullness-bar"></span>
+          </span>
+          <span class="stat-status" id="fullness-status" aria-live="polite">Loading...</span>
+        </div>
+      </div>
+      <button type="button" id="restart" class="restart">↻ Restart</button>
+    </header>
+
+    <section class="stage" id="stage" data-visible-count="0" aria-label="Visual novel scene">
+      <img id="background" class="background" src="assets/backgrounds/campus.jpg" alt="Illustrated scene background">
+      <div class="scenic-overlay"></div>
+      <div class="scene-label" id="location">AFTER SCHOOL</div>
+      <!-- Two independent slots; JavaScript automatically centers a lone sprite. -->
+      <img id="sprite-left" class="sprite sprite--left" alt="Character on the left" aria-hidden="true">
+      <img id="sprite-right" class="sprite sprite--right" alt="Character on the right" aria-hidden="true">
+      <div class="scene-caption">A story about everyday choices</div>
+    </section>
+
+    <section class="panel" aria-label="Story dialogue">
+      <div class="panel-top">
+        <span id="speaker" class="speaker">Momo</span>
+        <span class="hint">SPACE / CLICK TO CONTINUE</span>
+      </div>
+      <p id="dialogue" class="dialogue" aria-live="polite">Loading story…</p>
+      <div id="choices" class="choices" aria-label="Story choices"></div>
+      <div class="panel-bottom">
+        <div class="note" id="status">Stats update when you make decisions.</div>
+        <button type="button" id="next" class="next">Next →</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
